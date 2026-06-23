@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodieGo – Usability Testing & Analysis Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F1EFE8;color:#2C2C2A;padding:0 0 60px}
+
+/* HEADER */
+.hero{background:#FF6B35;padding:48px 24px 40px;text-align:center;color:#fff}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;font-size:12px;font-weight:500;padding:5px 14px;margin-bottom:16px}
+.hero h1{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
+.hero p{font-size:14px;opacity:0.85;line-height:1.6;max-width:500px;margin:0 auto 20px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.hero-meta-item{font-size:12px;opacity:0.8;display:flex;align-items:center;gap:5px}
+
+/* LAYOUT */
+.container{max-width:780px;margin:0 auto;padding:0 16px}
+
+/* SECTION */
+.section{margin-top:32px}
+.section-label{font-size:11px;font-weight:600;color:#FF6B35;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px}
+.section-title{font-size:20px;font-weight:700;color:#2C2C2A;margin-bottom:4px}
+.section-sub{font-size:13px;color:#888780;margin-bottom:16px;line-height:1.5}
+
+/* CARD */
+.card{background:#fff;border:1.5px solid #E8E6E0;border-radius:16px;padding:20px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;color:#2C2C2A;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+
+/* TEST PLAN */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plan-item{background:#F9F8F6;border-radius:10px;padding:12px 14px}
+.plan-item-label{font-size:11px;color:#888780;font-weight:500;margin-bottom:3px}
+.plan-item-val{font-size:13px;color:#2C2C2A;font-weight:500}
+
+/* SCENARIOS */
+.scenario{background:#F9F8F6;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.scenario-num{width:28px;height:28px;border-radius:50%;background:#FF6B35;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.scenario-title{font-size:13px;font-weight:600;color:#2C2C2A}
+.scenario-task{font-size:12px;color:#5F5E5A;margin-top:3px;line-height:1.5}
+
+/* USERS */
+.user-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.user-card{background:#F9F8F6;border-radius:12px;padding:14px;text-align:center}
+.user-avatar{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+.u1{background:#FF6B35}
+.u2{background:#3B82F6}
+.u3{background:#8B5CF6}
+.user-name{font-size:13px;font-weight:600;color:#2C2C2A}
+.user-age{font-size:11px;color:#888780;margin-top:2px}
+.user-tag{display:inline-block;font-size:10px;background:#FFF0EA;color:#854F0B;padding:2px 8px;border-radius:20px;margin-top:6px;font-weight:500}
+
+/* SESSION TABLE */
+.session-table{width:100%;border-collapse:collapse;font-size:12px}
+.session-table th{background:#FFF0EA;color:#854F0B;font-weight:600;padding:10px 12px;text-align:left;border-bottom:1.5px solid #FFD5C0}
+.session-table td{padding:10px 12px;border-bottom:1px solid #F1EFE8;color:#2C2C2A;vertical-align:top;line-height:1.5}
+.session-table tr:last-child td{border-bottom:none}
+.session-table tr:hover td{background:#FAFAF8}
+
+/* SEVERITY */
+.sev{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+.sev-high{background:#FCEBEB;color:#791F1F}
+.sev-med{background:#FAEEDA;color:#633806}
+.sev-low{background:#EAF3DE;color:#3B6D11}
+
+/* FINDINGS */
+.finding{border-left:3px solid #FF6B35;padding:12px 14px;background:#FFF8F5;border-radius:0 10px 10px 0;margin-bottom:10px}
+.finding-issue{font-size:13px;font-weight:600;color:#2C2C2A;margin-bottom:4px}
+.finding-quote{font-size:12px;color:#5F5E5A;font-style:italic;margin-bottom:6px}
+.finding-fix{font-size:12px;color:#3B6D11;background:#EAF3DE;padding:5px 10px;border-radius:6px;display:inline-block}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.metric-card{background:#fff;border:1.5px solid #E8E6E0;border-radius:12px;padding:14px;text-align:center}
+.metric-val{font-size:24px;font-weight:700;color:#FF6B35}
+.metric-label{font-size:11px;color:#888780;margin-top:4px;line-height:1.4}
+
+/* RECOMMENDATIONS */
+.rec{background:#fff;border:1.5px solid #E8E6E0;border-radius:12px;padding:16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start}
+.rec-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rec-title{font-size:13px;font-weight:600;color:#2C2C2A;margin-bottom:4px}
+.rec-desc{font-size:12px;color:#5F5E5A;line-height:1.6}
+.rec-priority{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:6px}
+.pri-high{background:#FCEBEB;color:#791F1F}
+.pri-med{background:#FAEEDA;color:#633806}
+.pri-low{background:#EAF3DE;color:#3B6D11}
+
+/* CONCLUSION */
+.conclusion{background:#FF6B35;border-radius:16px;padding:24px;color:#fff;margin-top:32px}
+.conclusion h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.conclusion p{font-size:13px;opacity:0.9;line-height:1.7}
+
+/* FOOTER */
+.footer{text-align:center;margin-top:32px;font-size:12px;color:#B4B2A9}
+.footer span{color:#FF6B35;font-weight:500}
+
+@media(max-width:600px){
+  .plan-grid{grid-template-columns:1fr}
+  .user-cards{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Task 4 · Usability Testing & Analysis</div>
+  <h1>FoodieGo — Usability Report</h1>
+  <p>Usability testing conducted on the FoodieGo food delivery mobile app prototype to identify pain points and improve user experience.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">📅 June 2026</div>
+    <div class="hero-meta-item">👥 3 Participants</div>
+    <div class="hero-meta-item">📱 Mobile App</div>
+    <div class="hero-meta-item">🧪 5 Test Scenarios</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: TEST PLAN -->
+  <div class="section">
+    <div class="section-label">Section 1</div>
+    <div class="section-title">Usability Test Plan</div>
+    <div class="section-sub">Defines the objective, scope, method, and test scenarios used during the usability evaluation of the FoodieGo prototype.</div>
+
+    <div class="card">
+      <div class="card-title">📋 Test Overview</div>
+      <div class="plan-grid">
+        <div class="plan-item">
+          <div class="plan-item-label">Product</div>
+          <div class="plan-item-val">FoodieGo — Food Delivery App</div>
+        </div>
+        <div class="plan-item">
+          <div class="plan-item-label">Test Method</div>
+          <div class="plan-item-val">Moderated Think-Aloud</div>
+        </div>
+        <div class="plan-item">
+          <div class="plan-item-label">Platform</div>
+          <div class="plan-item-val">Mobile (Android / iOS)</div>
+        </div>
+        <div class="plan-item">
+          <div class="plan-item-label">Number of Participants</div>
+          <div class="plan-item-val">3 Sample Users</div>
+        </div>
+        <div class="plan-item">
+          <div class="plan-item-label">Test Duration</div>
+          <div class="plan-item-val">20–30 minutes per user</div>
+        </div>
+        <div class="plan-item">
+          <div class="plan-item-label">Goal</div>
+          <div class="plan-item-val">Identify usability issues & improvements</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Test Scenarios</div>
+      <div class="scenario">
+        <div class="scenario-num">1</div>
+        <div><div class="scenario-title">Onboarding & Login</div><div class="scenario-task">Task: Open the app, read the splash screen and complete login using email and password.</div></div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-num">2</div>
+        <div><div class="scenario-title">Browse & Search Food</div><div class="scenario-task">Task: Find a burger from the home screen using the category filter or search bar.</div></div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-num">3</div>
+        <div><div class="scenario-title">View Food Details</div><div class="scenario-task">Task: Tap on Classic Burger, read details, change quantity to 2, and add to cart.</div></div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-num">4</div>
+        <div><div class="scenario-title">Place an Order</div><div class="scenario-task">Task: Complete the order and reach the order confirmation screen.</div></div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-num">5</div>
+        <div><div class="scenario-title">Track Order Status</div><div class="scenario-task">Task: View the order tracking steps and understand current delivery status.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: USER PROFILES -->
+  <div class="section">
+    <div class="section-label">Section 2</div>
+    <div class="section-title">Participant Profiles</div>
+    <div class="section-sub">Three sample users were recruited representing the target audience of the FoodieGo app.</div>
+
+    <div class="user-cards">
+      <div class="user-card">
+        <div class="user-avatar u1">PS</div>
+        <div class="user-name">Priya Sharma</div>
+        <div class="user-age">Age 24 · Software Engineer</div>
+        <div class="user-tag">Tech-savvy</div>
+        <div style="font-size:11px;color:#5F5E5A;margin-top:8px;line-height:1.5">Orders food online 3–4 times a week. Uses Swiggy and Zomato regularly.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-avatar u2">AR</div>
+        <div class="user-name">Arjun Rajan</div>
+        <div class="user-age">Age 32 · Business Owner</div>
+        <div class="user-tag">Moderate user</div>
+        <div style="font-size:11px;color:#5F5E5A;margin-top:8px;line-height:1.5">Orders food occasionally. Prefers simple, fast interfaces with fewer steps.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-avatar u3">MK</div>
+        <div class="user-name">Meena Krishnan</div>
+        <div class="user-age">Age 45 · Teacher</div>
+        <div class="user-tag">Low tech exposure</div>
+        <div style="font-size:11px;color:#5F5E5A;margin-top:8px;line-height:1.5">Rarely orders food online. Needs clear labels and simple navigation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SESSION OBSERVATIONS -->
+  <div class="section">
+    <div class="section-label">Section 3</div>
+    <div class="section-title">Session Observations</div>
+    <div class="section-sub">Recorded observations from each participant during the moderated usability sessions.</div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="session-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Priya (U1)</th>
+            <th>Arjun (U2)</th>
+            <th>Meena (U3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Login</strong></td>
+            <td>Completed easily in 20 sec</td>
+            <td>Completed in 30 sec, looked for Google login first</td>
+            <td>Confused by "token" field, took 60 sec</td>
+          </tr>
+          <tr>
+            <td><strong>2. Browse Food</strong></td>
+            <td>Used search bar directly</td>
+            <td>Tapped category chips — found burger easily</td>
+            <td>Did not notice category chips, scrolled home page</td>
+          </tr>
+          <tr>
+            <td><strong>3. Food Detail</strong></td>
+            <td>Completed in 15 sec, liked price update on quantity change</td>
+            <td>Tried to swipe the food image — expected image gallery</td>
+            <td>Could not find the minus button easily, font too small</td>
+          </tr>
+          <tr>
+            <td><strong>4. Place Order</strong></td>
+            <td>Completed easily, tapped "Add to cart"</td>
+            <td>Expected a cart page before confirmation</td>
+            <td>Confused — expected a "Pay Now" button, not "Add to cart"</td>
+          </tr>
+          <tr>
+            <td><strong>5. Track Order</strong></td>
+            <td>Understood tracking steps immediately</td>
+            <td>Wanted a map view showing delivery person location</td>
+            <td>Could not tell which step was current — colors not clear</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 4: FINDINGS -->
+  <div class="section">
+    <div class="section-label">Section 4</div>
+    <div class="section-title">Key Findings & Feedback</div>
+    <div class="section-sub">Issues identified during sessions, ranked by severity with direct user quotes.</div>
+
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px">
+      <table class="session-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Issue Found</th>
+            <th>Screen</th>
+            <th>Severity</th>
+            <th>Users Affected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>No cart review page before placing order</td>
+            <td>Food Detail</td>
+            <td><span class="sev sev-high">High</span></td>
+            <td>U2, U3</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Category chips not visible to new users</td>
+            <td>Home</td>
+            <td><span class="sev sev-high">High</span></td>
+            <td>U3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Quantity buttons (+ / −) too small on detail screen</td>
+            <td>Food Detail</td>
+            <td><span class="sev sev-med">Medium</span></td>
+            <td>U3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>No map/live tracking on order screen</td>
+            <td>Order Tracking</td>
+            <td><span class="sev sev-med">Medium</span></td>
+            <td>U2</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Active tracking step not visually distinct enough</td>
+            <td>Order Tracking</td>
+            <td><span class="sev sev-med">Medium</span></td>
+            <td>U3</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Food image not swipeable (expected gallery)</td>
+            <td>Food Detail</td>
+            <td><span class="sev sev-low">Low</span></td>
+            <td>U2</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>No "Pay Now" button — flow feels incomplete</td>
+            <td>Checkout</td>
+            <td><span class="sev sev-low">Low</span></td>
+            <td>U3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finding">
+      <div class="finding-issue">🗣 Issue 1 — Missing cart review page</div>
+      <div class="finding-quote">"I wanted to see all my items before confirming the order. It went straight to confirmation." — Arjun</div>
+      <div class="finding-fix">✅ Fix: Add a Cart screen between Food Detail and Order Confirmation</div>
+    </div>
+    <div class="finding">
+      <div class="finding-issue">🗣 Issue 2 — Category chips not noticed</div>
+      <div class="finding-quote">"I didn't see the burger icon at the top. I was just scrolling down." — Meena</div>
+      <div class="finding-fix">✅ Fix: Add a "Categories" label above chips and increase chip size</div>
+    </div>
+    <div class="finding">
+      <div class="finding-issue">🗣 Issue 3 — Quantity buttons too small</div>
+      <div class="finding-quote">"The minus button was very tiny. I pressed the wrong thing twice." — Meena</div>
+      <div class="finding-fix">✅ Fix: Increase touch target size to minimum 44x44px for + and − buttons</div>
+    </div>
+    <div class="finding">
+      <div class="finding-issue">🗣 Issue 4 — No live map tracking</div>
+      <div class="finding-quote">"I want to see where my delivery person is on a map, like Swiggy does." — Arjun</div>
+      <div class="finding-fix">✅ Fix: Add Google Maps integration showing live rider location</div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: METRICS -->
+  <div class="section">
+    <div class="section-label">Section 5</div>
+    <div class="section-title">Usability Metrics</div>
+    <div class="section-sub">Quantitative data collected from the 3 usability sessions across 5 scenarios.</div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-val">73%</div>
+        <div class="metric-label">Task Completion Rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">67%</div>
+        <div class="metric-label">First-click Accuracy</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">7</div>
+        <div class="metric-label">Usability Issues Found</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">3.8/5</div>
+        <div class="metric-label">Avg User Satisfaction</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: RECOMMENDATIONS -->
+  <div class="section">
+    <div class="section-label">Section 6</div>
+    <div class="section-title">Design Improvement Suggestions</div>
+    <div class="section-sub">Actionable recommendations to improve the FoodieGo app based on usability findings.</div>
+
+    <div class="rec">
+      <div class="rec-icon" style="background:#FCEBEB">🛒</div>
+      <div>
+        <div class="rec-title">Add a Cart Review Screen</div>
+        <div class="rec-desc">Insert a dedicated cart page between Food Detail and Order Confirmation so users can review items, quantities, and total before placing the order. This reduces accidental orders.</div>
+        <div class="rec-priority pri-high">High Priority</div>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-icon" style="background:#FFF0EA">🏷️</div>
+      <div>
+        <div class="rec-title">Label Category Section Clearly</div>
+        <div class="rec-desc">Add a visible "Browse by category" heading above the category chips on the home screen. Increase chip size and add subtle animation to draw attention for first-time users.</div>
+        <div class="rec-priority pri-high">High Priority</div>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-icon" style="background:#FAEEDA">👆</div>
+      <div>
+        <div class="rec-title">Increase Touch Target Sizes</div>
+        <div class="rec-desc">Enlarge the + and − quantity buttons on the Food Detail screen to at least 44×44px as per Apple HIG and Android guidelines. This especially helps older users and those with motor difficulties.</div>
+        <div class="rec-priority pri-med">Medium Priority</div>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-icon" style="background:#EAF3FF">🗺️</div>
+      <div>
+        <div class="rec-title">Add Live Map Tracking</div>
+        <div class="rec-desc">Integrate a live map view on the Order Tracking screen showing the delivery rider's real-time location. This is now a standard expectation set by Swiggy and Zomato.</div>
+        <div class="rec-priority pri-med">Medium Priority</div>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-icon" style="background:#EAF3DE">✅</div>
+      <div>
+        <div class="rec-title">Improve Tracking Step Visibility</div>
+        <div class="rec-desc">Make the active tracking step more visually prominent — use a pulsing animation or a larger icon. Add a clear label like "Current status" so all users can instantly identify progress.</div>
+        <div class="rec-priority pri-med">Medium Priority</div>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-icon" style="background:#F3EAFF">🖼️</div>
+      <div>
+        <div class="rec-title">Add Image Gallery on Food Detail</div>
+        <div class="rec-desc">Allow users to swipe through multiple food images on the detail screen. Add small dot indicators below the image to signal that it is swipeable.</div>
+        <div class="rec-priority pri-low">Low Priority</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="conclusion">
+    <h3>📊 Conclusion</h3>
+    <p>The usability testing of FoodieGo revealed that the core flow — browsing, selecting, and ordering food — is largely intuitive for tech-savvy users. However, first-time and older users faced challenges with navigation discoverability, small touch targets, and a missing cart review step. By implementing the 6 recommendations above — particularly adding a cart page and improving category visibility — the app's usability score can be significantly improved. Iterative testing after each design change is recommended to validate improvements.</p>
+  </div>
+
+
+
+</div>
+</body>
+</html>
